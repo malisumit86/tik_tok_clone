@@ -1,4 +1,5 @@
 {
+  "homepage": "http://malisumit86.github.io/tik_tok_clone",
   "name": "tik_tok_clone",
   "version": "0.1.0",
   "private": true,
@@ -16,6 +17,8 @@
     "react-ticker": "^1.2.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
