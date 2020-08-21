@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react'
+import Video from "./Video"
+import "./App.css"
+import { db } from "./Firebase"
 import './App.css';
 
 function App() {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    //fires once when the component loads and never be again
+    db.collection('videos').onSnapshot(snapshot => {
+      setVideos(snapshot.docs.map(doc => doc.data()))
+    })
+  }, [videos]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    //BEM 
+
+    <div className="app">
+      <div className="app__videos">
+        {videos.map(
+          ({ url, channel, description, song, likes, messages, shares,poster }) => (
+            <Video
+              url={url}
+              channel={channel}
+              description={description}
+              song={song}
+              likes={likes}
+              messages={messages}
+              shares={shares}
+              poster = {poster}
+            />
+          ))
+        }
+      </div>
     </div>
   );
 }
